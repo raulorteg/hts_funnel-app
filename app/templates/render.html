@@ -1,0 +1,80 @@
+{% extends "shared/base.html" %}
+{% block title %} 
+    <!-- For 2-column format -->
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+    <!-- Library to render 3d molecules -->
+    <script src="https://3Dmol.org/build/3Dmol-min.js"></script>     
+    <script src="https://3Dmol.org/build/3Dmol.ui-min.js"></script> 
+    <style>
+      * {
+          box-sizing: border-box;
+        }
+  
+      .column {
+        float: left;
+        width: 40%;
+        padding: 20px;
+      }
+
+      .render-molecule {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        
+      }
+    </style>
+
+{% endblock %}
+  
+{% block content %}
+
+<div style="text-align: center;">
+  <br><br>
+  <!-- Title of the page, the molecule generated, in SMILES format -->
+  <h1 class="display-7">{{ smile }}</h1>
+
+    <!-- The predicted HOMO-LUMO gap for the given molecule -->
+    <br><br>
+      Predicted HOMO-LUMO gap: {{ gap }} eV.
+    <br><br>
+
+    <div class="render-molecule">
+
+      <!-- Left hand column with the molecule render --> 
+      <div class="column">
+        <div id="viewer" style="width: 500px; height: 500px; position: relative;"></div>
+        <a href="{{ url_for('static', path='mol2render.xyz') }}" class="btn2" download="{{ smile }}.xyz">Download</a>
+      </div>
+
+      <!-- Right hand side column with the XYZ structural information used by Surrogate -->
+      <div class="column">
+        <div style="font-size:small;font-family:monospace;color: black; text-align: justify;">
+
+          {% for item in sample %}
+            {{ item }} <br>
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+    
+
+</div>
+<script type="text/javascript">
+  let config = { backgroundColor: 'white' }; 
+  let viewer = $3Dmol.createViewer( 'viewer', config );
+
+  $3Dmol.get('../static/mol2render.xyz', function(data){
+            viewer.addModel(data, "xyz");
+            viewer.setStyle({stick:{radius:.5}});
+            console.log(data);
+            viewer.render();
+            viewer.zoomTo();
+            viewer.zoom(0.9, 500);  
+            });
+  viewer.zoomTo();
+</script>
+
+{% endblock %}

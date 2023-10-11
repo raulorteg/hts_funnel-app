@@ -1,0 +1,45 @@
+{% extends "shared/base.html" %}
+
+
+{% block title %}
+  <title>HTS Funnel</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+  <div class="row">
+    <div class="col">
+      <h1 class="display-5">Your results are here ...</h1>
+
+      <br><br>
+      HOMO-LUMO gap condition given: {{ condition }} eV
+
+      <br><br>
+      <!-- Div tag for the homepage image-->
+      <div style="text-align: center;">
+        <img src="{{ url_for('static', path='funnelapp.jpg') }}">
+      </div>
+      <br><br>
+
+        <!-- Table displaying the results -->
+        <div style="text-align: center;"></div>
+          <table>
+            <tr>
+              <th>SMILES</th>
+              <th>HOMO-LUMO gap (eV)</th>
+            </tr>
+            {% for item in items %}
+            <tr>
+              <td><a href="/render/{{item.smile}}?gap={{item.pred}}">{{item.smile}}</a></td>
+              <td>{{item.pred}}</td>
+            </tr>
+            {% endfor %}
+          </table>
+          {{num_generated}} molecules found.
+        </div>
+
+    </div>
+  </div>
+  <br><br>
+</div>
+{% endblock %}

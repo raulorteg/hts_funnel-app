@@ -1,0 +1,29 @@
+{% extends "shared/base.html" %}
+
+
+{% block title %}
+  <title>HTS Funnel</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div style="text-align: center;">
+
+      <!-- Main messagge -->
+      <div class="row">
+        <div class="col">
+          <h1 class="display-6"> Nothing to see here </h1>
+        </div>
+      </div>
+
+      <!-- Main messagge body -->
+      <p>Could not find the molecule you were looking for. Try generating molecules again.</p><br> <br>
+      
+
+      <!-- input form to send user back to homepage -->
+      <form action="/"method="get">
+          <button type="submit" class="btn btn-primary btn-block btn-large">Homepage</button>
+      </form>
+    </div>
+</div>
+{% endblock %}

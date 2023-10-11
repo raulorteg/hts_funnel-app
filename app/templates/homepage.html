@@ -1,0 +1,52 @@
+{% extends "shared/base.html" %}
+
+
+{% block title %}
+  <title>HTS Funnel</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+  <div class="row">
+    <div class="col">
+      <!-- Title of the paper-->
+      <div>
+        <h1 class="display-5">Hierarchical generative and regressive machine learning for next generation materials screening</h1>
+        <h3 class="display-7", style="color:rgba(128, 128, 128, 0.475);font-style: italic;"> Raul Ortega Ochoa </h3>
+      </div>
+      <br>
+
+      <div style="text-align: center;">
+      <h3 class="display-5">Try me!</h3>
+
+        <!-- input form to receive the query for the ML model -->
+        <form action="{{ url_for('generate')}}"method="post">
+            <input type="text" name="condition" placeholder="HOMO-LUMO energy gap (eV)", required="required" />
+            <button type="submit" class="btn btn-primary btn-block btn-large" onClick="pictureChange();">Generate</button>
+        </form>
+      </div>
+
+   <!-- Display warning messages from the user input -->
+   <br><br>
+    <p style="color:red;text-align: center;">{{ warning_message }}</p>
+
+
+    <!-- Div tag for the homepage image-->
+    <div style="text-align: center;">
+      <img src="{{ url_for('static', path='top_view_funnel.jpg') }}" id="theImage">
+    </div>
+    </div>
+  </div>
+  <div>
+  </div>
+</div>
+
+<!-- Script for changing the homepage image when Generate button is pressed -->
+<script>
+  function pictureChange()
+  {
+  document.getElementById("theImage").src="{{ url_for('static', path='loading.gif') }}";
+  }
+  </script>
+{% endblock %}
+
